@@ -1,6 +1,7 @@
 # NewIsland - DCB
 *.bak
 delcmd.js
+package-lock.json
 config/config.yml
 config/configCommands.yml
 assets/NewIslandChat/*

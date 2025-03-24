@@ -197,7 +197,7 @@ module.exports.modalSubmit = async (interaction) => {
                 embeds: [
                     new EmbedBuilder()
                         .setColor(config.embed.color.error)
-                        .setDescription(`${EMBED_EMOJI_ERROR} **互動失敗：**${error.message}`)
+                        .setDescription(`${EMBED_EMOJI_ERROR} **互動失敗：**伺服器繁忙，請稍後再試！`)
                 ],
                 ephemeral: true
             });

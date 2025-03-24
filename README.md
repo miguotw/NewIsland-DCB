@@ -20,7 +20,7 @@
 1. **Clone 儲存庫：** 將本儲存庫 clone 到本地
 
     ```bash
-    git clone https://github.com/miguotw/MiYako-DCB.git
+    git clone https://github.com/miguotw/NewIsland-DCB.git
     ```
 
 2. **設定配置文件：** 填妥 `./confing` 內所有文件的空缺項目，並刪除檔案名稱後面的 `_example`

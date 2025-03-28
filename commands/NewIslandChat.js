@@ -65,7 +65,10 @@ module.exports = {
                     sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/與${BOTNICKNAME}諮詢 傳送訊息:${message}`, "INFO");
                     
                     // 取得 AI 回應
+                    const startTime = Date.now();
                     const chatResponse = await chatWithOpenAI(userId, message);
+                    const endTime = Date.now();
+                    const duration = Math.round((endTime - startTime) / 1000);
         
                     const embed = new EmbedBuilder()
                         .setColor(EMBED_COLOR)
@@ -74,7 +77,7 @@ module.exports = {
                             { name: `您的訊息`, value: message, inline: false },
                             { name: `${BOTNICKNAME}的回應`, value: chatResponse, inline: false }
                         )
-                        .setFooter({ text: `內容由 AI 進行回應，可能存在疏漏，請仔細甄別。` });
+                        .setFooter({ text: `耗時 ${duration} 秒 | 內容由 AI 進行回應，可能存在疏漏，請仔細甄別。` });
         
                     await interaction.editReply({ embeds: [embed] });
                     sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/與${BOTNICKNAME}諮詢 回應內容:${chatResponse}`, "INFO");
@@ -173,8 +176,11 @@ module.exports.modalSubmit = async (interaction) => {
             });
     
             // 取得 AI 回應
+            const startTime = Date.now();
             const chatResponse = await chatWithOpenAI(userId, message);
-    
+            const endTime = Date.now();
+            const duration = Math.round((endTime - startTime) / 1000);
+
             // 顯示 AI 回應
             await interaction.followUp({
                 embeds: [
@@ -185,7 +191,7 @@ module.exports.modalSubmit = async (interaction) => {
                             { name: `您的訊息`, value: message },
                             { name: `${BOTNICKNAME}的回應`, value: chatResponse }
                         )
-                        .setFooter({ text: `內容由 AI 進行回應，可能存在疏漏，請仔細甄別。` })
+                        .setFooter({ text: `耗時 ${duration} 秒 | 內容由 AI 進行回應，可能存在疏漏，請仔細甄別。` })
                 ],
                 ephemeral: true
             });

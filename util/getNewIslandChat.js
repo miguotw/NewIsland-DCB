@@ -6,9 +6,13 @@ const { configCommands } = require(path.join(process.cwd(), 'core/config'));
 // 導入設定檔內容
 const PROMPT = configCommands.NewIslandChat.prompt;
 const MEXLENGTH = configCommands.NewIslandChat.mexLength;
+const SESSIONLIMIT =configCommands.NewIslandChat.sessionLimit;
 
 // 定義保存對話歷史的資料夾路徑
 const CHAT_HISTORY_DIR = path.join(process.cwd(), 'assets', 'NewIslandChat');
+
+// 定義會話次數追蹤器
+const sessionCounts = {};
 
 // 確保資料夾存在
 if (!fs.existsSync(CHAT_HISTORY_DIR)) {
@@ -73,6 +77,18 @@ const deleteChatHistory = (userId) => {
  */
 const chatWithOpenAI = async (userId, message) => {
     try {
+        // 檢查並更新用戶的提問次數
+        if (!sessionCounts[userId]) {
+            sessionCounts[userId] = 1;
+        } else {
+            sessionCounts[userId]++;
+        }
+        
+        // 檢查是否超過限制
+        if (sessionCounts[userId] > SESSIONLIMIT ) {
+            throw new Error('您已達到目前工作階段的提問次數上限，請稍後再試！');
+        }
+
         // 獲取對話歷史
         let chatHistory = getChatHistory(userId);
 

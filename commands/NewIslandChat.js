@@ -72,7 +72,7 @@ module.exports = {
         
                     const embed = new EmbedBuilder()
                         .setColor(EMBED_COLOR)
-                        .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢`)
+                        .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢 (Beta)`)
                         .addFields(
                             { name: `您的訊息`, value: message, inline: false },
                             { name: `${BOTNICKNAME}的回應`, value: chatResponse, inline: false }
@@ -124,7 +124,7 @@ module.exports = {
                             const row = new ActionRowBuilder().addComponents(button);
                             const embed = new EmbedBuilder()
                                 .setColor(EMBED_COLOR)
-                                .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢`)
+                                .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢 (Beta)`)
                                 .setThumbnail(botAvatar)
                                 .setDescription(INTRODUCE);
 
@@ -169,7 +169,7 @@ module.exports.modalSubmit = async (interaction) => {
                 embeds: [
                     new EmbedBuilder()
                         .setColor(EMBED_COLOR)
-                        .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢`)
+                        .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢 (Beta)`)
                         .setDescription(`正在努力思考 ${EMBED_EMOJI_LOADING}`)
                 ],
                 ephemeral: true
@@ -186,7 +186,7 @@ module.exports.modalSubmit = async (interaction) => {
                 embeds: [
                     new EmbedBuilder()
                         .setColor(EMBED_COLOR)
-                        .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢`)
+                        .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢 (Beta)`)
                         .addFields(
                             { name: `您的訊息`, value: message },
                             { name: `${BOTNICKNAME}的回應`, value: chatResponse }
@@ -199,11 +199,15 @@ module.exports.modalSubmit = async (interaction) => {
     
         } catch (error) {
             // 錯誤處理
+            const messageReply = error.message.includes('您已達到目前工作階段的提問次數上限，請稍後再試！') 
+                ? error.message 
+                : '伺服器繁忙，請稍後再試！';
+
             await interaction.followUp({
                 embeds: [
                     new EmbedBuilder()
                         .setColor(config.embed.color.error)
-                        .setDescription(`${EMBED_EMOJI_ERROR} **互動失敗：**伺服器繁忙，請稍後再試！`)
+                        .setDescription(`${EMBED_EMOJI_ERROR} **互動失敗：** ${messageReply}`)
                 ],
                 ephemeral: true
             });

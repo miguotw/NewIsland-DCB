@@ -16,12 +16,12 @@ const ADMIN_ROLE = configCommands.NewIslandChat.admin;
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(`與${BOTNICKNAME}諮詢`)
+        .setName(`諮詢`)
         .setDescription(`與${BOTNICKNAME}進行聊天或管理聊天歷史`)
         .addSubcommand(subcommand =>
             subcommand
             .setName('傳送訊息')
-            .setDescription(`與${BOTNICKNAME}進行聊天`)
+            .setDescription(`與${BOTNICKNAME}諮詢`)
             .addStringOption(option =>
                 option.setName('訊息')
                 .setDescription(`輸入要發送給${BOTNICKNAME}的訊息`)
@@ -62,7 +62,7 @@ module.exports = {
                     await interaction.deferReply({ ephemeral: false });
 
                     const message = interaction.options.getString('訊息');
-                    sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/與${BOTNICKNAME}諮詢 傳送訊息:${message}`, "INFO");
+                    sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/諮詢 傳送訊息:${message}`, "INFO");
                     
                     // 取得 AI 回應
                     const startTime = Date.now();
@@ -72,7 +72,7 @@ module.exports = {
         
                     const embed = new EmbedBuilder()
                         .setColor(EMBED_COLOR)
-                        .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢 (Beta)`)
+                        .setTitle(`${EMBED_EMOJI} ┃ 與「島嶼 AI Chat」諮詢 (Beta)`)
                         .addFields(
                             { name: `您的訊息`, value: message, inline: false },
                             { name: `${BOTNICKNAME}的回應`, value: chatResponse, inline: false }
@@ -80,7 +80,7 @@ module.exports = {
                         .setFooter({ text: `耗時 ${duration} 秒 | 內容由 AI 進行回應，可能存在疏漏，請仔細甄別。` });
         
                     await interaction.editReply({ embeds: [embed] });
-                    sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/與${BOTNICKNAME}諮詢 回應內容:${chatResponse}`, "INFO");
+                    sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/諮詢 回應內容:${chatResponse}`, "INFO");
                     break;
                 }
 
@@ -89,7 +89,7 @@ module.exports = {
                     await interaction.deferReply({ ephemeral: true});
 
                     const operation = interaction.options.getString('操作');
-                    sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/與${BOTNICKNAME}諮詢 管理操作:${operation}`, "INFO");
+                    sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/諮詢 管理操作:${operation}`, "INFO");
 
                     switch (operation) {
                         // 匯出聊天紀錄
@@ -118,13 +118,13 @@ module.exports = {
                             
                             const button = new ButtonBuilder()
                                 .setCustomId('openChatButton')
-                                .setLabel(`與${BOTNICKNAME}諮詢`)
+                                .setLabel(`與「島嶼 AI Chat」諮詢`)
                                 .setStyle(ButtonStyle.Primary);
 
                             const row = new ActionRowBuilder().addComponents(button);
                             const embed = new EmbedBuilder()
                                 .setColor(EMBED_COLOR)
-                                .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢 (Beta)`)
+                                .setTitle(`${EMBED_EMOJI} ┃ 與「島嶼 AI Chat」諮詢 (Beta)`)
                                 .setThumbnail(botAvatar)
                                 .setDescription(INTRODUCE);
 
@@ -145,7 +145,7 @@ module.exports = {
 
         } catch (error) {
             // 錯誤處理
-            sendLog(interaction.client, `❌ 在執行 /與${BOTNICKNAME}諮詢 指令時發生錯誤：`, "ERROR", error); // 記錄錯誤日誌
+            sendLog(interaction.client, `❌ 在執行 /諮詢 指令時發生錯誤：`, "ERROR", error); // 記錄錯誤日誌
             errorReply(interaction, `**無法完成操作，原因：${error.message || '未知錯誤'}**`); // 向用戶顯示錯誤訊息
         }
     }
@@ -161,7 +161,7 @@ module.exports.modalSubmit = async (interaction) => {
             const message = interaction.fields.getTextInputValue('message');
             const userId = interaction.user.id;
 
-            sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了互動：o與${BOTNICKNAME}諮詢 傳送訊息:${message}`, "INFO");
+            sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了互動：o諮詢 傳送訊息:${message}`, "INFO");
 
             // 顯示等待提示
             await interaction.deferReply({ ephemeral: true });
@@ -169,7 +169,7 @@ module.exports.modalSubmit = async (interaction) => {
                 embeds: [
                     new EmbedBuilder()
                         .setColor(EMBED_COLOR)
-                        .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢 (Beta)`)
+                        .setTitle(`${EMBED_EMOJI} ┃ 與「島嶼 AI Chat」諮詢 (Beta)`)
                         .setDescription(`正在努力思考 ${EMBED_EMOJI_LOADING}`)
                 ],
                 ephemeral: true
@@ -186,7 +186,7 @@ module.exports.modalSubmit = async (interaction) => {
                 embeds: [
                     new EmbedBuilder()
                         .setColor(EMBED_COLOR)
-                        .setTitle(`${EMBED_EMOJI} ┃ 與${BOTNICKNAME}諮詢 (Beta)`)
+                        .setTitle(`${EMBED_EMOJI} ┃ 與「島嶼 AI Chat」諮詢 (Beta)`)
                         .addFields(
                             { name: `您的訊息`, value: message },
                             { name: `${BOTNICKNAME}的回應`, value: chatResponse }
@@ -195,7 +195,7 @@ module.exports.modalSubmit = async (interaction) => {
                 ],
                 ephemeral: true
             });
-            sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了互動：o與${BOTNICKNAME}諮詢 回應內容:${chatResponse}`, "INFO");
+            sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了互動：o諮詢 回應內容:${chatResponse}`, "INFO");
     
         } catch (error) {
             // 錯誤處理
@@ -211,7 +211,7 @@ module.exports.modalSubmit = async (interaction) => {
                 ],
                 ephemeral: true
             });
-            sendLog(interaction.client, `❌ 在執行 o與${BOTNICKNAME}諮詢 互動時發生錯誤：${error.message}`, "ERROR");
+            sendLog(interaction.client, `❌ 在執行 o諮詢 互動時發生錯誤：${error.message}`, "ERROR");
         }
     }
 };

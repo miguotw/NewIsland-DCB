@@ -14,8 +14,8 @@ const REPOSITORY = configCommands.about.repository;
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName(`關於${BOTNICKNAME}`)
-        .setDescription('查詢機器人的相關資訊與介紹'),
+        .setName(`關於我`)
+        .setDescription(`查詢${BOTNICKNAME}的相關資訊與介紹`),
 
     async execute(interaction) {
 
@@ -24,7 +24,7 @@ module.exports = {
 
         try {
             // 發送執行指令的摘要到 sendLog
-            sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/關於${BOTNICKNAME}`, "INFO");
+            sendLog(interaction.client, `💾 ${interaction.user.tag} 執行了指令：/關於我`, "INFO");
 
             // 獲取機器人的相關資訊
             const botUser = interaction.client.user;

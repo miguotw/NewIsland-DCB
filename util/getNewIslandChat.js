@@ -9,7 +9,7 @@ const MEXLENGTH = configCommands.NewIslandChat.mexLength;
 const SESSIONLIMIT =configCommands.NewIslandChat.sessionLimit;
 
 // 定義保存對話歷史的資料夾路徑
-const CHAT_HISTORY_DIR = path.join(process.cwd(), 'assets', 'NewIslandChat');
+const CHAT_HISTORY_DIR = path.join(process.cwd(), 'assets', 'NewIslandChat', 'archive'); 
 
 // 定義會話次數追蹤器
 const sessionCounts = {};
